@@ -136,28 +136,6 @@ python precompute_4dgs.py --cfg ./configs/Dynamic/TUM_RGBD/freiburg3_walking_rpy
 python reconstruct_4dgs.py --cfg ./configs/Dynamic/TUM_RGBD/freiburg3_walking_rpy.yaml --ws test
 ```
 
-## Reproduce the Tables
-
-- Now we provide instructions to reproduce our results for Tab.1 (Dycheck), Tab.2 (Nvidia), and Tab.3 (Tum and Sintel) in the new paper.
-- (Option-A) Reproduce by running locally:
-    - Download the data from [here](https://drive.google.com/file/d/1sSvVi5Bid_KQsuguVGuqUVgWPzVdb9jM/view?usp=sharing). By downloading the data, you must agree and obey the original license from the original authors ([Dycheck](https://github.com/KAIR-BAIR/dycheck), [Nvidia](https://github.com/gaochen315/DynamicNeRF?tab=readme-ov-file), [TUM](https://cvg.cit.tum.de/rgbd/dataset/), and [Sintel](http://sintel.is.tue.mpg.de/)). Unzip into the following file structure:
-    
-        ```bash
-        ProjRoot/data/iphone
-            ├── apple
-            ├── ...
-            └── wheel
-        ```
-    
-    - Check the script `reproduce.sh`. For example, if you have 1 GPU, just run: 
-        ```bash 
-        bash reproduce.sh
-        ```
-        
-        If you have multiple GPUs, you can run `bash reproduce.sh #GPU_ID #NUM_OF_TOTAL_DEVICES` in several terminals.
-- (Option-B) Reproduce by downloading the checkpoints run by us from [here](https://drive.google.com/drive/folders/14awBsxTmY211ut9SnW5d1vuvVyThYhjl?usp=sharing). Unzip the downloaded subfolders in the same structure as above under `data`.
-- Finally, you can collect all the results by checking `collect_metrics.ipynb` to form reports stored in `data/metrics_collected`.
-
 ## Citation
 
 If you find our code or paper useful, please cite
