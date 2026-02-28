@@ -50,7 +50,7 @@ Snowflake icons denote pre-trained, frozen modules.
 <summary><font size="4">
 TUM Rendering Quality Results
 </font></summary>
-<div style="text-align: center;">
+<div align="center">
 <img src="./.media/TUM_result.png" width="60%">
 </div>
 </details>
@@ -59,7 +59,7 @@ TUM Rendering Quality Results
 <summary><font size="4">
 Bonn Rendering Quality Results
 </font></summary>
-<div style="text-align: center;">
+<div align="center">
 <img src="./.media/Bonn_result.png" width="60%">
 </div>
 </details>
@@ -68,7 +68,7 @@ Bonn Rendering Quality Results
 <summary><font size="4">
 Wild-SLAM Rendering Quality Results
 </font></summary>
-<div style="text-align: center;">
+<div align="center">
 <img src="./.media/Wild-SLAM_result.png" width="60%">
 </div>
 </details>
@@ -77,7 +77,7 @@ Wild-SLAM Rendering Quality Results
 <summary><font size="4">
 Modules Ablation
 </font></summary>
-<div style="text-align: center;">
+<div align="center">
 <img src="./.media/Modules_ablation.png" width="60%">
 </div>
 </details>
@@ -86,7 +86,7 @@ Modules Ablation
 <summary><font size="4">
 IR Ablation
 </font></summary>
-<div style="text-align: center;">
+<div align="center">
 <img src="./.media/IR_ablation.png" width="60%">
 </div>
 </details>
