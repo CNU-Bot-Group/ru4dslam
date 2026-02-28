@@ -128,12 +128,12 @@ bash scripts_run/run_bonn_all.sh
 bash scripts_run/run_wild_slam_iphone_all.sh
 ```
 
-If you want just to run a single sequence, you can run the following commands to run each part of pipelines:
+If you want just to run a single sequence, you can run the following commands to run each part of pipelines like:
 ```bash
-python run.py  ./configs/Dynamic/TUM_RGBD/{config_file
-python run.py  ./configs/Dynamic/Bonn/{config_file}
-python run.py  ./configs/Dynamic/Wild_SLAM_Mocap/{config_file} 
-python run.py  ./configs/Dynamic/Wild_SLAM_Mocap/{config_file} 
+python run.py ./configs/Dynamic/TUM_RGBD/freiburg3_walking_rpy.yaml
+python gen_rum.py ./configs/Dynamic/TUM_RGBD/freiburg3_walking_rpy.yaml
+python precompute_4dgs.py --cfg ./configs/Dynamic/TUM_RGBD/freiburg3_walking_rpy.yaml --ws test
+python reconstruct_4dgs.py --cfg ./configs/Dynamic/TUM_RGBD/freiburg3_walking_rpy.yaml --ws test
 ```
 
 ## Reproduce the Tables
