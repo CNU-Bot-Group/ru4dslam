@@ -1,0 +1,11 @@
+inherit_from: ./configs/Dynamic/Wild_SLAM_iPhone/wild_slam_iphone.yaml
+scene: iphone_horse
+
+data:
+  input_folder: ROOT_FOLDER_PLACEHOLDER/horse
+
+cam:
+  fx: 1341.1414794921875
+  fy: 1341.1414794921875
+  cx: 960.2431640625
+  cy: 729.904052734375

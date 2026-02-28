@@ -1,0 +1,11 @@
+inherit_from: ./configs/Dynamic/Wild_SLAM_iPhone/wild_slam_iphone.yaml
+scene: iphone_parking
+
+data:
+  input_folder: ROOT_FOLDER_PLACEHOLDER/parking
+
+cam:
+  fx: 1336.74609375
+  fy: 1336.74609375
+  cx: 957.005859375
+  cy: 726.88409423828125

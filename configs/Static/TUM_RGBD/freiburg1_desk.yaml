@@ -1,0 +1,15 @@
+inherit_from: ./configs/Dynamic/TUM_RGBD/tum_dynamic.yaml
+scene: freiburg1_desk
+
+data:
+  input_folder: ROOT_FOLDER_PLACEHOLDER/rgbd_dataset_freiburg1_desk
+cam:  #intrinsic is different per scene in TUM, this cam does not have distortion
+  H: 480 
+  W: 640 
+  fx: 517.306408
+  fy: 516.469215
+  cx: 318.643040
+  cy: 255.313989
+  distortion: [0.262383, -0.953104, -0.005358, 0.002628, 1.163314]
+  H_edge: 15
+  W_edge: 15

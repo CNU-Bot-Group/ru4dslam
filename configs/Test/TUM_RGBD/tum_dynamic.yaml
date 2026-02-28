@@ -1,0 +1,93 @@
+inherit_from: ./profile/demo/demo_prep.yaml
+
+dataset: 'tumrgbd'
+
+tracking:
+  buffer: 350
+
+# Less weight on the depth loss for TUM
+mapping:
+  Training:
+    alpha: 0.8
+
+data:
+  root_folder: ./datasets/TUM_RGBD
+  output: ./output/TUM_RGBD
+
+cam:  #NOTE: intrinsic is different per scene in TUM
+  # refer to https://vision.in.tum.de/data/datasets/rgbd-dataset/file_formats#intrinsic_camera_calibration_of_the_kinect
+  png_depth_scale: 5000.0 #for depth image in png format
+  ### target/output camera settings, camera_size -> resize -> crop -> target_size
+  # H: 480 
+  # W: 640 
+  # fx: 535.4
+  # fy: 539.2
+  # cx: 320.1
+  # cy: 247.6
+  H_edge: 5
+  W_edge: 5
+  H_out: 470
+  W_out: 630
+
+Ablation:
+  semantic_mask: False
+  warp_mask: False
+  depth_err_weight: True
+  optimize_recent_frame: True
+  const_speed: False
+  submaps: True
+  loss_o: False
+  sample: True
+  background: True
+  smooth_alpha: 0
+
+  use_lc: True
+  # lc_test: True
+  eval_netvlad: False
+  
+  voxel_front: 0.01 # 0.01
+  mapping_every: True
+  # image_downsample: 2
+  uncertainty: True # False # True
+  is_blur: True
+  use_down_sample: True
+  metric_depth: True
+  train_with_metric: False
+  
+Dataset:
+  type: 'tum'
+  sensor_type: 'depth'
+  pcd_downsample: 8 # 128
+  pcd_downsample_init: 32 # 32
+  adaptive_pointsize: True
+  point_size: 0.01
+
+opt_params:
+  iterations: 30000
+  position_lr_init: 0.00016
+  position_lr_final: 0.0000016
+  position_lr_delay_mult: 0.01
+  position_lr_max_steps: 30000
+  feature_lr: 0.0025
+  opacity_lr: 0.05
+  scaling_lr: 0.001
+  rotation_lr: 0.001
+  percent_dense: 0.01
+  lambda_dssim: 0.2
+  densification_interval: 100
+  opacity_reset_interval: 3000
+  densify_from_iter: 500
+  densify_until_iter: 15000
+  densify_grad_threshold: 0.0002
+
+model_params:
+  sh_degree: 0
+  source_path: ""
+  model_path: ""
+  resolution: -1
+  white_background: False
+  data_device: "cuda"
+
+pipeline_params:
+  convert_SHs_python: False
+  compute_cov3D_python: False

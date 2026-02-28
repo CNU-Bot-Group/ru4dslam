@@ -1,0 +1,25 @@
+inherit_from: ./profile/demo/demo_prep_iphone.yaml
+
+dataset: 'wild_slam_iphone'
+
+data:
+  root_folder: ./datasets/Wild_SLAM_iPhone
+  output: ./output/Wild_SLAM_iPhone
+  
+mapping:
+  Training:
+    alpha: 0.8 # Increase this value to make rendering loss weighs more on rgb rather than depth
+  uncertainty_params:
+    # This parameter weighs depth loss when training uncertainty MLP
+    # It's lambda_1 in equation 4 in the paper.
+    # We set it 0 here as the metric depth is not reliable in iphone dataset.
+    # However, feel free to finetune this parameter if trying to run with your own dataset.
+    uncer_depth_mult: 0.0 
+
+cam:
+  H: 1440 
+  W: 1920 
+  H_out: 360
+  W_out: 480
+
+  png_depth_scale: 1000 # 1336 0.2672 3.74251497006 # ttt

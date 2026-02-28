@@ -1,0 +1,167 @@
+# inherit_from: ./profile/demo/demo_prep.yaml
+
+test_training_time_mode: False # True
+
+is_blur: True # True
+is_exposure: True # True
+t_s: 0.01
+r_s: 0.006
+fix_num_poses: 0
+
+verbose: True
+gui: False
+stride: 1            # use every X image from the dataset 
+max_frames: -1       # use the first X images from the dataset, -1 means using all
+setup_seed: 43
+fast_mode: True # True # False
+device: "cuda:0"
+
+mapping:
+  online_plotting: True # False # render and save images online
+  full_resolution: False # if using the full resolution for mapping, but we always keep downsampled size for tracking
+  final_refine_iters: 20000 # iterations of final refinement, it will be forced to be 3000 if fast_mode is on
+  eval_before_final_ba: True # False
+  deform_gaussians: True # apply transformation on Gaussians to account for loop closure and BA
+  pcd_downsample: 32 # downsamples the unprojected depth map --> point cloud
+  pcd_downsample_init: 16 # first frame downsampling factor is smaller
+  adaptive_pointsize: True
+  point_size: 0.05
+  Training:
+    ssim_loss: True # use SSIM in mapping (online and refinement)
+    alpha: 0.5 # weight (between 0 and 1) of the rgb loss compared to depth loss
+    init_itr_num: 1050
+    init_gaussian_update: 100
+    init_gaussian_reset: 500
+    init_gaussian_th: 0.005
+    init_gaussian_extent: 30
+    mapping_itr_num: 450
+    gaussian_update_every: 1500 # we prune and densify once every 1500 iterations with an offset of 500.
+    gaussian_update_offset: 500
+    gaussian_th: 0.7 # used in densify and prune - minimum opacity to be kept
+    gaussian_extent: 1.0 # used in densify and prune. We prune points with larger 3d scale than 0.1 * gaussian_extent
+    gaussian_reset: 20001
+    size_threshold: 20 # used in densify and prune. We prune points that have a larger radius than 20 in screen space
+    window_size: 10
+    edge_threshold: 4
+    rgb_boundary_threshold: 0.01
+    spherical_harmonics: False # kept for reference, but not tested when True
+    lr:
+      cam_rot_delta: 0.003
+      cam_trans_delta: 0.001
+  opt_params:
+    position_lr_init: 0.00016
+    position_lr_final: 0.0000016
+    position_lr_delay_mult: 0.01
+    position_lr_max_steps: 30000
+    feature_lr: 0.0025
+    opacity_lr: 0.05
+    scaling_lr: 0.001
+    rotation_lr: 0.001
+    percent_dense: 0.01
+    lambda_dssim: 0.2
+    densification_interval: 100
+    opacity_reset_interval: 3000
+    densify_until_iter: 15000
+    densify_grad_threshold: 0.0002
+
+  model_params:
+    sh_degree: 0
+    
+  pipeline_params:
+    convert_SHs_python: False
+    compute_cov3D_python: False
+
+  uncertainty_params:
+    activate: True # True
+    vis_uncertainty_online: False
+    feature_dim: 384
+    feature_type: "dino"
+    mapping_loss_type: "normalized_l1"
+    train_frac_fix: 0.3 # in the range of 0-1
+    ssim_window_size: 7
+    ssim_median_filter_size: 5
+    reg_stride: 2
+    opacity_th_for_uncer_loss: 0.9
+    reg_mult: 0.5
+    ssim_mult: 0.5
+    uncer_depth_mult: 0.2
+
+    lr: 0.0004
+    weight_decay: 0.00001
+
+tracking:
+  pretrained: ./pretrained/droid.pth
+  buffer: 350     # maximum number of keyframes that can be stored
+  beta: 0.75      # beta * Distance(R|t) + (1-beta) * Distance(I|t), refer to droid_kernels.cu:frame_distance_kernel
+  warmup: 12       # use the first X keyframes for bootstrapping the tracker
+  max_age: 50     # remove edges in the graph if they have been updated more than X times
+  mono_thres: 0.1 # in DSPO, remove the edges if the average disp error of the aligned mono disp is larger than X*average_disp
+                  # it can be set to False for keeping all edges.
+  motion_filter:
+    thresh: 3.0     # add new frame as potential keyframe if avg flow >= X pixels
+  multiview_filter:
+    thresh: 0.01    # eta in eq(6) of the paper
+    visible_num: 2  # points need to be viewed by at least X cameras
+  frontend:
+    enable_loop: True      # whether to enable loop closure
+    enable_online_ba: True # whether to enable online bundle adjustment
+    keyframe_thresh: 3.0   # remove keyframe if it is too close to the last keyframe, i.e. avg flow < X pixels
+    thresh: 16.0           # only consider edge with avg flow < X pixels
+    window: 25             # local ba window size
+    radius: 2              # build edges within local window [i-radius, i]
+    nms: 1                 # r_local in GO-SLAM paper
+    max_factors: 75        # maximum number of edges in local ba
+  backend:
+    final_ba: False # ttt True # whether to enable final global bundle adjustment in the end
+    final_refine: True # ttt nnn
+    ba_freq: 20    # do online bundle adjustment every X keyframes
+    thresh: 25.0   # only consider edge with avg flow < X pixels
+    radius: 1      # build edges within local window [i-radius, i]
+    nms: 5         # r_global in GO-SLAM paper
+    # used for loop detection
+    loop_window: 25    # N_local in GO-SLAM paper
+    loop_thresh: 25.0  # only consider edge with avg flow < X pixels
+    loop_radius: 1     # build edges within local window [i-radius, i]
+    loop_nms: 10       # r_loop in GO-SLAM paper
+    # Don't set {metric_depth_reg} to False unless you want to do some ablation study
+    # If it's False, the depth for mapping will be processed following how Splat-SLAM correct scale.
+    #                See "get_w2c_and_depth" in mapper.py for detail.
+    metric_depth_reg: True # whether to use metric depth to guide disparity in BA, always set to True
+    normalize: False    # whether to normalize disps after each BA iter
+  uncertainty_params:
+    activate: True # True
+  force_keyframe_every_n_frames: 9 # set to negative value if you don't want to force to insert keyframes
+  nb_ref_frame_metric_depth_filtering: 6 # number of reference frames for filtering high uncertainty metric depth points
+
+cam:
+  ### target/output camera settings, camera_size -> resize -> crop -> target_size
+  ### original camera parameters
+  H: 720
+  W: 1280
+  fx: 643.2550048828125
+  fy: 642.450927734375
+  cx: 651.057373046875
+  cy: 364.04974365234375
+  png_depth_scale: 5000 #for depth image in png format
+  ### target/output camera settings, camera_size -> resize -> crop -> target_size
+  H_edge: 0
+  W_edge: 0
+  H_out: 360
+  W_out: 640
+
+mono_prior:
+  # Metric depth model, only support: 
+  #     metric3d_vit_small, metric3d_vit_large and metric3d_vit_giant2
+  #     dpt2_{vits,vitb,vitl}_{hypersim,vkitti}_{20,80}  (see src/utils/mono_priors/metric_depth_estimators.py for detail)
+  #             e.g. dpt2_vitl_hypersim_20, dpt2_vitl_vkitti_80
+  # depth: 'metric3d_vit_large'
+  depth: 'metric3d_vit_giant2'
+
+  # Available options: {dinov2_reg_small_fine, dinov2_small_fine} from fit3d, and {dinov2_vits14, dinov2_vits14_reg}
+  feature_extractor: 'dinov2_reg_small_fine' 
+
+data:
+  output: ./output/ru4d_slam
+  input_folder: Please_specify_the_path_to_the_dataset
+
+dataset: 'tumrgbd'

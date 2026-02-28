@@ -1,0 +1,11 @@
+inherit_from: ./configs/Dynamic/Wild_SLAM_iPhone/wild_slam_iphone.yaml
+scene: iphone_piano
+
+data:
+  input_folder: ROOT_FOLDER_PLACEHOLDER/piano
+
+cam:
+  fx: 1351.06982421875
+  fy: 1351.06982421875
+  cx: 961.050537109375
+  cy: 730.18597412109375

@@ -1,0 +1,11 @@
+inherit_from: ./configs/Dynamic/Wild_SLAM_iPhone/wild_slam_iphone.yaml
+scene: iphone_shopping
+
+data:
+  input_folder: ROOT_FOLDER_PLACEHOLDER/shopping
+
+cam:
+  fx: 1340.6441650390625
+  fy: 1340.6441650390625
+  cx: 960.7640380859375
+  cy: 730.26397705078125

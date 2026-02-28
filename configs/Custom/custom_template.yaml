@@ -1,0 +1,37 @@
+inherit_from: ./configs/ru4d_slam.yaml
+scene: custom_scene # Replace with your scene name
+
+dataset: 'wild_slam_iphone'
+data:
+  input_folder: ./datasets/{Path_to_your_data}
+  output: ./output/Custom
+
+cam:
+  H: 1242 
+  W: 2208 
+  H_out: 360
+  W_out: 480
+  fx: 1974.4219
+  fy: 1974.4219
+  cx: 1134.8486
+  cy: 655.6515
+  # H_edge: 0 # Uncomment this and the following line if you have edge cropping like in TUM datasets
+  # W_edge: 0
+  # distortion: [0.0, 0.0, 0.0, 0.0, 0.0] # Uncomment if you have distortion coefficients
+  
+mapping:
+  Training:
+    alpha: 0.8 # Increase this value to make rendering loss weighs more on rgb rather than depth
+  uncertainty_params:
+    # For outdoor dataset where the metric depth estimation is unstable, 
+    # I recommend to set this value to be 0.1 or even 0.
+    uncer_depth_mult: 0.2 
+
+
+# # Uncomment the following lines to enable fast mode and GUI
+# fast_mode: True
+# gui: True
+
+# # Uncomment the following lines to save online plotting data
+# mapping:
+#   online_plotting: True
