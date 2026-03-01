@@ -22,7 +22,7 @@
                   <span class="eql-cntrb"><small><br><sup>*</sup>Equal contribution</small><small>&nbsp;&nbsp;&nbsp;&nbsp;<sup>&dagger;</sup>Corresponding Author</small></span>
 </p>
 <p align="center"> <strong>Computer Vision And Pattern Recognition (CVPR) 2026 Findings Track</strong></p>
-  <h3 align="center"><a href="https://arxiv.org/pdf/2602.20807">Paper</a> | <a href="ru4d-slam.github.io">Project Page</a> | <a href="https://arxiv.org/abs/2602.20807">arXiv</a></h3>
+  <h3 align="center"><a href="https://arxiv.org/pdf/2602.20807">Paper</a> | <a href="https://ru4d-slam.github.io">Project Page</a> | <a href="https://arxiv.org/abs/2602.20807">arXiv</a></h3>
   <div align="center"></div>
 </p>
 <p align="center">
