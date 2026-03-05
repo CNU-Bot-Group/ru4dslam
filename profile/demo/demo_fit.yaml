@@ -29,7 +29,7 @@ photo_dyn_node_just_dyn_region: False # True
 photo_dyn_error_grow_steps: [] # ttt []
 dyn_error_grow_th: 0.2 # ttt 0.2
 photo_dyn_error_grow_num_frames: 4 # ttt 4
-get_curve_refilter_unconsistent: True # ttt True
+get_curve_refilter_unconsistent: False # ttt True
 is_opa_control: True # ttt True
 # ### ttt
 # photo_lambda_vel_xyz_reg: 0

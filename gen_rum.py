@@ -68,6 +68,9 @@ if __name__ == '__main__':
     slice_h = slice(down_scale // 2 - 1, ht//down_scale*down_scale+1, down_scale)
     slice_w = slice(down_scale // 2 - 1, wd//down_scale*down_scale+1, down_scale)
 
+    ratio_th = cfg["RUM"]["ratio_th"] if "RUM" in cfg.keys() and "ratio_th" in cfg["RUM"].keys() else 0.4
+    uncer_th = cfg["RUM"]["uncer_th"] if "RUM" in cfg.keys() and "uncer_th" in cfg["RUM"].keys() else 0.4
+
     n_features = cfg["mapping"]["uncertainty_params"]["feature_dim"]
     uncer_network = generate_uncertainty_mlp(n_features)
 
@@ -160,7 +163,7 @@ if __name__ == '__main__':
         uncer = (uncer - 0.1) * data_rate + 0.1
 
         uncer = uncer**2
-        mask = (uncer > 3.5).detach().cpu().numpy()
+        mask = (uncer > uncer_th).detach().cpu().numpy()
 
         if dilate_mask:
             mask = cv2.dilate(mask.astype(np.uint8), kernel, iterations=1).astype(bool)
@@ -206,7 +209,7 @@ if __name__ == '__main__':
 
             ratio0 = np.count_nonzero(m & mask)/ np.count_nonzero(m)
 
-            if ratio0 < 0.2:
+            if ratio0 < ratio_th:
                 continue
             
             if dilate_mask:
@@ -285,7 +288,7 @@ if __name__ == '__main__':
     torch.save(uncer_weight_list, f"{uncer_dir}/uncer_weight.ckpt")
     if not test_training_time_mode:
         fps = 5
-        imageio.mimsave(f"{viz_dir}/iamge.gif", image_list, fps=fps)
+        imageio.mimsave(f"{viz_dir}/image.gif", image_list, fps=fps)
         imageio.mimsave(f"{viz_dir}/uncer_img.gif", uncer_img_list, fps=fps)
         imageio.mimsave(f"{viz_dir}/motion_mask.gif", motion_mask_list, fps=fps)
         imageio.mimsave(f"{viz_dir}/uncer_mask.gif", uncer_mask_list, fps=fps)

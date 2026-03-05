@@ -10,3 +10,7 @@ cam:  #intrinsic is different per scene in TUM, this cam does not have distortio
   fy: 539.2
   cx: 320.1
   cy: 247.6
+
+RUM:
+  ratio_th: 0.2
+  uncer_th: 3.5
