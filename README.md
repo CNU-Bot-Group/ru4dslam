@@ -22,7 +22,7 @@
                   <span class="eql-cntrb"><small><br><sup>*</sup>Equal contribution</small><small>&nbsp;&nbsp;&nbsp;&nbsp;<sup>&dagger;</sup>Corresponding Author</small></span>
 </p>
 <p align="center"> <strong>CVPR Findings 2026</strong></p>
-  <h3 align="center"><a href="https://arxiv.org/pdf/2602.20807">Paper</a> | <a href="https://ru4d-slam.github.io">Project Page</a> | <a href="https://arxiv.org/abs/2602.20807">arXiv</a></h3>
+  <h3 align="center"><a href="https://openaccess.thecvf.com/content/CVPR2026F/html/Zhao_RU4D-SLAM_Reweighting_Uncertainty_in_Gaussian_Splatting_SLAM_for_4D_Scene_CVPRF_2026_paper.html">Paper</a> | <a href="https://ru4d-slam.github.io">Project Page</a> | <a href="https://arxiv.org/abs/2602.20807">arXiv</a></h3>
   <div align="center"></div>
 </p>
 <p align="center">
